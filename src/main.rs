@@ -19,7 +19,7 @@ fn main() {
 
 fn parse_date(s: &String) -> Date<Utc> {
     let y: i32 = *&s[0..4].parse().unwrap();
-    let m: u32 = *&s[5..6].parse().unwrap();
-    let d: u32 = *&s[7..8].parse().unwrap();
+    let m: u32 = *&s[4..6].parse().unwrap();
+    let d: u32 = *&s[6..8].parse().unwrap();
     Utc.ymd(y, m, d)
 }
