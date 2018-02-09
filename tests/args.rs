@@ -19,26 +19,8 @@ fn fails_for_one_argument() {
 }
 
 #[test]
-fn fails_for_end_and_positive_offset() {
-    assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01", "2017-01-02", "-p 1"])
-        .fails()
-        .and()
-        .stderr().contains("cannot be used with")
-        .unwrap();
-}
-
-#[test]
-fn fails_for_end_and_negative_offset() {
-    assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01", "2017-01-02", "-m 1"])
-        .fails()
-        .and()
-        .stderr().contains("cannot be used with")
-        .unwrap();
-}
-
-#[test]
-fn fails_for_positive_and_negative_offset() {
-    assert_cli::Assert::command(&["target/debug/days_between", "20170101", "-p 1", "-m 1"])
+fn fails_for_end_and_offset() {
+    assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01", "2017-01-02", "-o 1"])
         .fails()
         .and()
         .stderr().contains("cannot be used with")
