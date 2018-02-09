@@ -1,25 +1,48 @@
-extern crate chrono;
+extern crate clap;
 extern crate days_between;
 
-use std::env;
+use clap::{App, Arg};
 use std::process;
-use chrono::{Utc, TimeZone, Date};
-use days_between::Inputs;
+use days_between::{inputs, calculate};
 
 fn main() {
-    let Inputs { start, end } = Inputs::new(env::args()).unwrap_or_else(|err| {
+    let args = App::new("DaysBetween")
+        .version("0.2.0")
+        .author("Charlie S. <charlieasaunders@gmail.com>")
+        .about("A utility for calculating the number of days between two dates or a date offset from a start date.")
+        .arg(Arg::with_name("start")
+            .help("The start date for the calculation, formatted YYYYMMDD or YYYY-MM-DD.")
+            .index(1)
+            .takes_value(true)
+            .required(true))
+        .arg(Arg::with_name("end")
+            .help("The end date for the calculation.")
+            .short("e")
+            .long("end-date")
+            .conflicts_with_all(&["plus", "minus"])
+            .takes_value(true)
+            .required(false)
+            .index(2))
+        .arg(Arg::with_name("plus")
+            .help("Calculate the date this many days after the start date.")
+            .short("p")
+            .long("plus-days")
+            .conflicts_with_all(&["end", "minus"])
+            .takes_value(true)
+            .required(false))
+        .arg(Arg::with_name("minus")
+            .help("Calculate the date this many days before the start date.")
+            .short("m")
+            .long("minus-days")
+            .conflicts_with_all(&["end", "plus"])
+            .takes_value(true)
+            .required(false))
+        .get_matches();
+
+    let args = inputs::Inputs::new(args).unwrap_or_else(|err| {
         eprintln!("Argument parsing error: {}", err);
         process::exit(1);
     });
-    let start = parse_date(&start);
-    let end = parse_date(&end);
-    
-    println!("{}", end.signed_duration_since(start).num_days());
-}
 
-fn parse_date(s: &String) -> Date<Utc> {
-    let y: i32 = *&s[0..4].parse().unwrap();
-    let m: u32 = *&s[4..6].parse().unwrap();
-    let d: u32 = *&s[6..8].parse().unwrap();
-    Utc.ymd(y, m, d)
+    calculate::print_output(&args)
 }
