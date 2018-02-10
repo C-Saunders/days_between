@@ -2,7 +2,8 @@
 ### A command line utility to give the number of days between two dates, or the date a number of days offset from a start date.
 
 ## API
-`./days_between <start_date> [<end_date> OR --offset=integer]`
+* `./days_between <start_date> [<end_date> OR --offset=integer]`
+* `./days_between -o=integer <start_date>`
 
 Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output is `YYYYMMDD` for offset calculations.
 
@@ -16,17 +17,18 @@ Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output is `YYYYMMDD` for offset cal
 ## Examples
 ```bash
 # Use YYYYMMDD or YYYY-MM-DD
-$ <path>/days_between 20180101 2018-01-01 => 0
+$ <path>/days_between 20180101 2018-01-01 # 0
 ```
 ```bash
-$ <path>/days_between 19700101 20170901 => 17410
+$ <path>/days_between 19700101 20170901 # 17410
 ```
 ```bash
 $ # -o is the short version of --offset
-$ <path>/days_between 2018-02-09 -o=3 => 20180212
+$ <path>/days_between 2018-02-09 -o=3 # 20180212
 ```
 ```bash
-$ <path>/days_between 2018-02-09 -o=-3 => 20180206
+$ # Offset can be negative. It can also come first.
+$ <path>/days_between -o=-3 2018-02-09 # 20180206
 ```
 
 ## Tips
