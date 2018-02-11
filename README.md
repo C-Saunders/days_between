@@ -5,7 +5,7 @@
 * `./days_between <start_date> [<end_date> OR --offset=integer]`
 * `./days_between -o=integer <start_date>`
 
-Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output is `YYYYMMDD` for offset calculations.
+Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations.
 
 ## Setup
 
@@ -24,11 +24,11 @@ $ <path>/days_between 19700101 20170901 # 17410
 ```
 ```bash
 $ # -o is the short version of --offset
-$ <path>/days_between 2018-02-09 -o=3 # 20180212
+$ <path>/days_between 20180209 -o=3 # 20180212
 ```
 ```bash
 $ # Offset can be negative. It can also come first.
-$ <path>/days_between -o=-3 2018-02-09 # 20180206
+$ <path>/days_between -o=-3 2018-02-09 # 2018-02-06
 ```
 
 ## Tips

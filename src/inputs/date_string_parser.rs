@@ -1,9 +1,11 @@
 use regex::{Regex, Captures};
+use ::DateFormat;
 
 pub struct ParsedDateString {
     pub year: i32,
     pub month: u32,
     pub day: u32,
+    pub format_type: DateFormat,
 }
 
 impl ParsedDateString {
@@ -16,7 +18,8 @@ impl ParsedDateString {
                 Ok(ParsedDateString {
                     year: extract_as_int(&caps, &"year"),
                     month: extract_as_unsigned(&caps, &"month"),
-                    day: extract_as_unsigned(&caps, &"day")
+                    day: extract_as_unsigned(&caps, &"day"),
+                    format_type: if input.contains("-") { DateFormat::Dashes } else { DateFormat::NoDashes }
                 })
             },
             _ => Err("Failed to parse date string")

@@ -45,3 +45,12 @@ fn positive_offset() {
     .stdout().is("20180212")
     .unwrap();
 }
+
+#[test]
+fn format_matches_start_date() {
+    assert_cli::Assert::command(&["target/debug/days_between", "2018-02-09", "-o=3"])
+    .succeeds()
+    .and()
+    .stdout().is("2018-02-12")
+    .unwrap();
+}
