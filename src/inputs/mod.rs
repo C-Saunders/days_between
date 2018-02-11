@@ -6,20 +6,25 @@ mod date_string_parser;
 
 use clap::ArgMatches;
 use chrono::{Utc, TimeZone, Date};
+use ::DateFormat;
 
 pub struct Inputs {
     pub start: Option<Date<Utc>>,
     pub end: Option<Date<Utc>>,
     pub offset: Option<i64>,
+    pub format_type: DateFormat,
 }
 
 // Blatant duplication here. Not sure how to get rid of it nicely yet, due to the error handling.
 // We're relying on the CLI tests to test this, rather than trying to make ArgMatches for unit tests here.
 impl Inputs {
     pub fn new(args: ArgMatches) -> Result<Inputs, &'static str> {
+        let format_type;
+
         let start: Option<Date<Utc>> = match args.value_of("start") {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
+                format_type = parsed_value.format_type;
                 Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
             },
             None => return Err("Missing start date"),
@@ -47,6 +52,6 @@ impl Inputs {
             return Err("Must have one of [end-date, offset].")
         }
 
-        Ok(Inputs { start, end, offset })
+        Ok(Inputs { start, end, offset, format_type })
     }
 }
