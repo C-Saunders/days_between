@@ -30,6 +30,11 @@ fn main() {
             .conflicts_with(&"end")
             .takes_value(true)
             .required(false))
+        .arg(Arg::with_name("list")
+            .help("Print dates in the calculated range, newline delimited.")
+            .short("l")
+            .long("list")
+            .required(false))
         .get_matches();
 
     let args = inputs::Inputs::new(args).unwrap_or_else(|err| {

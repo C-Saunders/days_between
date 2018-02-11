@@ -10,8 +10,17 @@ fn fails_for_no_arguments() {
 }
 
 #[test]
-fn fails_for_one_argument() {
+fn fails_without_end_or_offset() {
     assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01"])
+        .fails()
+        .and()
+        .stderr().contains("have one of")
+        .unwrap();
+}
+
+#[test]
+fn fails_without_end_or_offset_with_list() {
+    assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01", "-l"])
         .fails()
         .and()
         .stderr().contains("have one of")
