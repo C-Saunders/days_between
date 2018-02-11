@@ -13,6 +13,7 @@ pub struct Inputs {
     pub end: Option<Date<Utc>>,
     pub offset: Option<i64>,
     pub format_type: DateFormat,
+    pub list_output: bool,
 }
 
 // Blatant duplication here. Not sure how to get rid of it nicely yet, due to the error handling.
@@ -52,6 +53,6 @@ impl Inputs {
             return Err("Must have one of [end-date, offset].")
         }
 
-        Ok(Inputs { start, end, offset, format_type })
+        Ok(Inputs { start, end, offset, format_type, list_output: args.is_present("list") })
     }
 }

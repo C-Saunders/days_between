@@ -1,6 +1,6 @@
 [package]
 name = "days_between"
-version = "0.2.0"
+version = "0.4.0"
 authors = ["Charlie Saunders <charlieasaunders@gmail.com>"]
 
 [dependencies]
