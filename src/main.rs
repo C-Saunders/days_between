@@ -9,7 +9,7 @@ fn main() {
     let args = App::new("DaysBetween")
         .version("0.2.0")
         .author("Charlie S. <charlieasaunders@gmail.com>")
-        .about("A utility for calculating the number of days between two dates or a date offset from a start date.")
+        .about("A command line utility for working with date ranges.")
         .arg(Arg::with_name("start")
             .help("The start date for the calculation, formatted YYYYMMDD or YYYY-MM-DD.")
             .index(1)
