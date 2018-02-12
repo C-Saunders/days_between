@@ -1,5 +1,5 @@
 # Days Between
-### A command line utility to give the number of days between two dates, or the date a number of days offset from a start date.
+### A command line utility for working with date ranges.
 
 ## API
 * `./days_between <start_date> [<end_date> OR --offset=integer] [options]`
