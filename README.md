@@ -1,19 +1,9 @@
 # Days Between
 ### A command line utility for working with date ranges.
 
-## API
-* `./days_between <start_date> [<end_date> OR --offset=integer] [options]`
-* `./days_between -o=integer <start_date>`
-
-Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations.
-
-## Options
-* -h, --help Print help info
-* -l, --list Prints all dates in the calculated range (e.g. for `xargs` input)
-* -o, --offset <offset> Calculate the date this many days offset the start date. Positive or negative integer.
-
 ## Examples
 ```bash
+# Calculate the number of days between dates
 # Use YYYYMMDD or YYYY-MM-DD
 $ <path>/days_between 20180101 2018-01-01 # 0
 ```
@@ -55,6 +45,18 @@ $ <path>/days_between days_between 2018-01-01 2017-12-29 -l
 # 2017-12-30
 # 2017-12-29
 ```
+
+## API
+* `./days_between <start_date> [<end_date> OR --offset=integer] [options]`
+* `./days_between -o=integer <start_date>`
+
+Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations.
+
+## Options
+* -h, --help Print help info
+* -l, --list Prints all dates in the calculated range (e.g. for `xargs` input)
+* -o, --offset <offset> Calculate the date this many days offset the start date. Positive or negative integer.
+
 
 ## Setup
 
