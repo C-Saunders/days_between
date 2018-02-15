@@ -2,6 +2,7 @@
 name = "days_between"
 version = "0.4.0"
 authors = ["Charlie Saunders <charlieasaunders@gmail.com>"]
+license = "MIT"
 
 [dependencies]
 chrono = "0.4"
