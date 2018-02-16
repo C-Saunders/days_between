@@ -5,7 +5,8 @@ fn fails_for_no_arguments() {
     assert_cli::Assert::command(&["target/debug/days_between"])
         .fails()
         .and()
-        .stderr().contains("required arguments")
+        .stderr()
+        .contains("required arguments")
         .unwrap();
 }
 
@@ -14,7 +15,8 @@ fn fails_without_end_or_offset() {
     assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01"])
         .fails()
         .and()
-        .stderr().contains("have one of")
+        .stderr()
+        .contains("have one of")
         .unwrap();
 }
 
@@ -23,16 +25,22 @@ fn fails_without_end_or_offset_with_list() {
     assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01", "-l"])
         .fails()
         .and()
-        .stderr().contains("have one of")
+        .stderr()
+        .contains("have one of")
         .unwrap();
 }
 
 #[test]
 fn fails_for_end_and_offset() {
-    assert_cli::Assert::command(&["target/debug/days_between", "2017-01-01", "2017-01-02", "-o 1"])
-        .fails()
+    assert_cli::Assert::command(&[
+        "target/debug/days_between",
+        "2017-01-01",
+        "2017-01-02",
+        "-o 1",
+    ]).fails()
         .and()
-        .stderr().contains("cannot be used with")
+        .stderr()
+        .contains("cannot be used with")
         .unwrap();
 }
 
@@ -41,7 +49,8 @@ fn fails_with_malformed_start_date() {
     assert_cli::Assert::command(&["target/debug/days_between", "2017010", "20170102"])
         .fails()
         .and()
-        .stderr().contains("parse date")
+        .stderr()
+        .contains("parse date")
         .unwrap();
 }
 

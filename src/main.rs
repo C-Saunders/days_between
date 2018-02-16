@@ -3,7 +3,7 @@ extern crate days_between;
 
 use clap::{App, Arg};
 use std::process;
-use days_between::{inputs, calculate};
+use days_between::{calculate, inputs};
 
 fn main() {
     let args = App::new("DaysBetween")

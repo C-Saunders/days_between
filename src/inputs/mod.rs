@@ -5,8 +5,8 @@ extern crate regex;
 mod date_string_parser;
 
 use clap::ArgMatches;
-use chrono::{Utc, TimeZone, Date};
-use ::DateFormat;
+use chrono::{Date, TimeZone, Utc};
+use DateFormat;
 
 pub struct Inputs {
     pub start: Option<Date<Utc>>,
@@ -27,7 +27,7 @@ impl Inputs {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
                 format_type = parsed_value.format_type;
                 Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
-            },
+            }
             None => return Err("Missing start date"),
         };
 
@@ -35,24 +35,28 @@ impl Inputs {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
                 Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
-            },
+            }
             None => None,
         };
 
         let offset: Option<i64> = match args.value_of("offset") {
-            Some(value) => {
-                match value.parse::<i64>() {
-                    Ok(parsed_value) => Some(parsed_value),
-                    _ => return Err("Failed to parse offset"),
-                }
+            Some(value) => match value.parse::<i64>() {
+                Ok(parsed_value) => Some(parsed_value),
+                _ => return Err("Failed to parse offset"),
             },
-            None => None
+            None => None,
         };
 
         if end.is_none() && offset.is_none() {
-            return Err("Must have one of [end-date, offset].")
+            return Err("Must have one of [end-date, offset].");
         }
 
-        Ok(Inputs { start, end, offset, format_type, list_output: args.is_present("list") })
+        Ok(Inputs {
+            start,
+            end,
+            offset,
+            format_type,
+            list_output: args.is_present("list"),
+        })
     }
 }

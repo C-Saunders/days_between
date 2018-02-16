@@ -1,6 +1,6 @@
 use inputs::Inputs;
 use chrono::{Date, Duration, Utc};
-use ::DateFormat;
+use DateFormat;
 
 struct Range {
     start: Date<Utc>,
@@ -10,7 +10,11 @@ struct Range {
 
 impl Range {
     fn new(start: Date<Utc>, end: Date<Utc>) -> Range {
-        Range { start, end, current: start }
+        Range {
+            start,
+            end,
+            current: start,
+        }
     }
 
     fn difference(&self) -> i64 {
@@ -18,7 +22,7 @@ impl Range {
     }
 }
 
-impl Iterator for Range{
+impl Iterator for Range {
     type Item = Date<Utc>;
     fn next(&mut self) -> Option<Self::Item> {
         let start = self.start;
@@ -63,7 +67,7 @@ pub fn print_output(inputs: &Inputs) {
     let range = calculate_range(&inputs);
     let output_format = match inputs.format_type {
         DateFormat::NoDashes => "%Y%m%d",
-        DateFormat::Dashes => "%Y-%m-%d" ,
+        DateFormat::Dashes => "%Y-%m-%d",
     };
 
     if inputs.list_output {

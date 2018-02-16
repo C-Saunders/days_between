@@ -1,5 +1,5 @@
-use regex::{Regex, Captures};
-use ::DateFormat;
+use regex::{Captures, Regex};
+use DateFormat;
 
 pub struct ParsedDateString {
     pub year: i32,
@@ -14,15 +14,17 @@ impl ParsedDateString {
         let captures = re.captures(input);
 
         match captures {
-            Some(caps) => {
-                Ok(ParsedDateString {
-                    year: extract_as_int(&caps, &"year"),
-                    month: extract_as_unsigned(&caps, &"month"),
-                    day: extract_as_unsigned(&caps, &"day"),
-                    format_type: if input.contains("-") { DateFormat::Dashes } else { DateFormat::NoDashes }
-                })
-            },
-            _ => Err("Failed to parse date string")
+            Some(caps) => Ok(ParsedDateString {
+                year: extract_as_int(&caps, &"year"),
+                month: extract_as_unsigned(&caps, &"month"),
+                day: extract_as_unsigned(&caps, &"day"),
+                format_type: if input.contains("-") {
+                    DateFormat::Dashes
+                } else {
+                    DateFormat::NoDashes
+                },
+            }),
+            _ => Err("Failed to parse date string"),
         }
     }
 }
@@ -37,7 +39,6 @@ fn extract_as_unsigned(caps: &Captures, group_name: &str) -> u32 {
     caps.name(group_name).unwrap().as_str().parse().unwrap()
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::ParsedDateString;
@@ -50,7 +51,7 @@ mod tests {
         assert_eq!(val.day, 24);
     }
 
-     #[test]
+    #[test]
     fn parse_with_dashes() {
         let val: ParsedDateString = ParsedDateString::new("2018-01-24").unwrap();
         assert_eq!(val.year, 2018);
