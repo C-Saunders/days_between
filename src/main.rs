@@ -7,7 +7,7 @@ use days_between::{calculate, inputs};
 
 fn main() {
     let args = App::new("DaysBetween")
-        .version("0.4.0")
+        .version("0.5.0")
         .author("Charlie S. <charlieasaunders@gmail.com>")
         .about("A command line utility for working with date ranges.")
         .arg(Arg::with_name("start")
