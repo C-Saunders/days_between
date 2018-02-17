@@ -16,7 +16,7 @@ $ <path>/days_between 19700101 20170901 # 17410
 $ <path>/days_between 20180209 -o=3 # 20180212
 ```
 ```bash
-# Offset can be negative. It can also come first.
+# Offset can be negative; it can also come first
 $ <path>/days_between -o=-3 2018-02-09 # 2018-02-06
 ```
 ```bash
@@ -27,17 +27,18 @@ $ <path>/days_between 2018-02-09 -o=3 -l
 # 2018-02-11
 # 2018-02-12
 
-$ <path>/days_between 2018-02-09 -o=-3 -l
+# All options can come before the start date
+$ <path>/days_between -o=-3 -l 2018-02-09
 # 2018-02-09
 # 2018-02-08
 # 2018-02-07
 # 2018-02-06
 
-$ <path>/days_between 2017-12-29 2018-01-01 -l
-# 2017-12-29
-# 2017-12-30
-# 2017-12-31
-# 2018-01-01
+$ <path>/days_between 2017-12-29 2018-01-01 -l -f=%v
+# 29-Dec-2017
+# 30-Dec-2017
+# 31-Dec-2017
+#  1-Jan-2018
 
 $ <path>/days_between days_between 2018-01-01 2017-12-29 -l
 # 2018-01-01
@@ -50,7 +51,7 @@ $ <path>/days_between days_between 2018-01-01 2017-12-29 -l
 * `./days_between <start_date> [<end_date> OR --offset=integer] [options]`
 * `./days_between -o=integer <start_date>`
 
-Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations.
+Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations and can be overridden and customized using the format option.
 
 ## Options
 * -h, --help Print help info
