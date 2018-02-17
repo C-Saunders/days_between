@@ -7,4 +7,5 @@ pub mod calculate;
 pub enum DateFormat {
     NoDashes,
     Dashes,
+    Custom(String),
 }

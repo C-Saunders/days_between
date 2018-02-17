@@ -56,7 +56,7 @@ Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start dat
 * -h, --help Print help info
 * -l, --list Prints all dates in the calculated range (e.g. for `xargs` input)
 * -o, --offset <offset> Calculate the date this many days offset the start date. Positive or negative integer.
-
+* -f, --format Specify the output date format (defaults to matching start date format). See [chrono::format::strftime](https://docs.rs/chrono/0.4.0/chrono/format/strftime/index.html) for options.
 
 ## Setup
 

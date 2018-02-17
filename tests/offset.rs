@@ -59,3 +59,13 @@ fn format_matches_start_date() {
         .is("2018-02-12")
         .unwrap();
 }
+
+#[test]
+fn custom_format() {
+    assert_cli::Assert::command(&["target/debug/days_between", "2018-02-09", "-o=3", "-f=%D"])
+        .succeeds()
+        .and()
+        .stdout()
+        .is("02/12/18")
+        .unwrap();
+}

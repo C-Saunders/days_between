@@ -91,3 +91,24 @@ fn list_negative_offset() {
         .contains("20170101")
         .unwrap();
 }
+
+#[test]
+fn list_custom_format() {
+    assert_cli::Assert::command(&[
+        "target/debug/days_between",
+        "20170103",
+        "-o=-2",
+        "-l",
+        "-f=%v",
+    ]).succeeds()
+        .and()
+        .stdout()
+        .contains("3-Jan-2017")
+        .and()
+        .stdout()
+        .contains("2-Jan-2017")
+        .and()
+        .stdout()
+        .contains("1-Jan-2017")
+        .unwrap();
+}

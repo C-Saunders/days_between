@@ -20,12 +20,12 @@ pub struct Inputs {
 // We're relying on the CLI tests to test this, rather than trying to make ArgMatches for unit tests here.
 impl Inputs {
     pub fn new(args: ArgMatches) -> Result<Inputs, &'static str> {
-        let format_type;
+        let input_format_type;
 
         let start: Option<Date<Utc>> = match args.value_of("start") {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
-                format_type = parsed_value.format_type;
+                input_format_type = parsed_value.format_type;
                 Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
             }
             None => return Err("Missing start date"),
@@ -45,6 +45,11 @@ impl Inputs {
                 _ => return Err("Failed to parse offset"),
             },
             None => None,
+        };
+
+        let format_type = match args.value_of("format") {
+            Some(value) => DateFormat::Custom(value.to_string()),
+            None => input_format_type,
         };
 
         if end.is_none() && offset.is_none() {

@@ -63,11 +63,12 @@ fn calculate_range(inputs: &Inputs) -> Range {
     Range::new(start, end)
 }
 
-pub fn print_output(inputs: &Inputs) {
+pub fn print_output(inputs: Inputs) {
     let range = calculate_range(&inputs);
     let output_format = match inputs.format_type {
         DateFormat::NoDashes => "%Y%m%d",
         DateFormat::Dashes => "%Y-%m-%d",
+        DateFormat::Custom(ref val) => &val,
     };
 
     if inputs.list_output {

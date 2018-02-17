@@ -35,6 +35,12 @@ fn main() {
             .short("l")
             .long("list")
             .required(false))
+        .arg(Arg::with_name("format")
+            .help("Output date format. See https://docs.rs/chrono/0.4.0/chrono/format/strftime/index.html")
+            .short("f")
+            .long("format")
+            .takes_value(true)
+            .required(false))
         .get_matches();
 
     let args = inputs::Inputs::new(args).unwrap_or_else(|err| {
@@ -42,5 +48,5 @@ fn main() {
         process::exit(1);
     });
 
-    calculate::print_output(&args)
+    calculate::print_output(args)
 }
