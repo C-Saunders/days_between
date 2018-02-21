@@ -7,14 +7,20 @@ use days_between::{calculate, inputs};
 
 fn main() {
     let args = App::new("DaysBetween")
-        .version("0.5.0")
+        .version("0.6.0")
         .author("Charlie S. <charlieasaunders@gmail.com>")
         .about("A command line utility for working with date ranges.")
         .arg(Arg::with_name("start")
             .help("The start date for the calculation, formatted YYYYMMDD or YYYY-MM-DD.")
             .index(1)
             .takes_value(true)
-            .required(true))
+            .required(false))
+        .arg(Arg::with_name("today")
+            .help("Use today as the start date for the calculation. Passing a date in addition to this will use that date as the end.")
+            .short("t")
+            .long("today")
+            .takes_value(false)
+            .required(false)) // TODO: might be able to use `requiredIf` or something similar here
         .arg(Arg::with_name("end")
             .help("The end date for the calculation.")
             .short("e")

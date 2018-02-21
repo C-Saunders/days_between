@@ -1,4 +1,6 @@
 extern crate assert_cli;
+extern crate chrono;
+use chrono::{Duration, Utc};
 
 #[test]
 fn list_end_after_start() {
@@ -110,5 +112,64 @@ fn list_custom_format() {
         .and()
         .stdout()
         .contains("1-Jan-2017")
+        .unwrap();
+}
+
+// TODO: See if we can use a macro or something to generate these date strings and clean this up
+#[test]
+fn end_today_list() {
+    let end_date = format!(
+        "{}",
+        Utc::today()
+            .checked_add_signed(Duration::days(2))
+            .unwrap()
+            .format("%Y-%m-%d")
+    );
+
+    assert_cli::Assert::command(&["target/debug/days_between", "--today", &end_date, "-l"])
+        .succeeds()
+        .and()
+        .stdout()
+        .contains(format!("{}", Utc::today().format("%Y-%m-%d")))
+        .and()
+        .stdout()
+        .contains(format!(
+            "{}",
+            Utc::today()
+                .checked_add_signed(Duration::days(1))
+                .unwrap()
+                .format("%Y-%m-%d")
+        ))
+        .and()
+        .stdout()
+        .contains(end_date)
+        .unwrap();
+}
+
+#[test]
+fn offset_today_list() {
+    assert_cli::Assert::command(&["target/debug/days_between", "--today", "-o=2", "-l"])
+        .succeeds()
+        .and()
+        .stdout()
+        .contains(format!("{}", Utc::today().format("%Y-%m-%d")))
+        .and()
+        .stdout()
+        .contains(format!(
+            "{}",
+            Utc::today()
+                .checked_add_signed(Duration::days(1))
+                .unwrap()
+                .format("%Y-%m-%d")
+        ))
+        .and()
+        .stdout()
+        .contains(format!(
+            "{}",
+            Utc::today()
+                .checked_add_signed(Duration::days(2))
+                .unwrap()
+                .format("%Y-%m-%d")
+        ))
         .unwrap();
 }

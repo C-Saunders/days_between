@@ -16,22 +16,21 @@ pub struct Inputs {
     pub list_output: bool,
 }
 
-// Blatant duplication here. Not sure how to get rid of it nicely yet, due to the error handling.
 // We're relying on the CLI tests to test this, rather than trying to make ArgMatches for unit tests here.
 impl Inputs {
     pub fn new(args: ArgMatches) -> Result<Inputs, &'static str> {
-        let input_format_type;
+        let mut input_format_type = DateFormat::Dashes;
 
-        let start: Option<Date<Utc>> = match args.value_of("start") {
+        let mut start: Option<Date<Utc>> = match args.value_of("start") {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
                 input_format_type = parsed_value.format_type;
                 Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
             }
-            None => return Err("Missing start date"),
+            None => None,
         };
 
-        let end: Option<Date<Utc>> = match args.value_of("end") {
+        let mut end: Option<Date<Utc>> = match args.value_of("end") {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
                 Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
@@ -51,6 +50,27 @@ impl Inputs {
             Some(value) => DateFormat::Custom(value.to_string()),
             None => input_format_type,
         };
+
+        let today = if args.is_present("today") {
+            Some(Utc::today())
+        } else {
+            None
+        };
+
+        if start.is_some() && end.is_some() && today.is_some() {
+            return Err("--today cannot be used with both start and end specified");
+        }
+
+        // today overrides the start date, so
+        // set end = start and start = today
+        // if we have an offset with today, there should be no end date
+        if today.is_some() {
+            if !offset.is_some() {
+                end = start;
+            }
+
+            start = today;
+        }
 
         if end.is_none() && offset.is_none() {
             return Err("Must have one of [end-date, offset].");

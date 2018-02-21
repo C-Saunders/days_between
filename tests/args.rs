@@ -1,12 +1,14 @@
 extern crate assert_cli;
 
+// TODO: figure out how to use a constant for "have one of" and "cannot be used with"
+
 #[test]
 fn fails_for_no_arguments() {
     assert_cli::Assert::command(&["target/debug/days_between"])
         .fails()
         .and()
         .stderr()
-        .contains("required arguments")
+        .contains("have one of")
         .unwrap();
 }
 
@@ -37,6 +39,20 @@ fn fails_for_end_and_offset() {
         "2017-01-01",
         "2017-01-02",
         "-o 1",
+    ]).fails()
+        .and()
+        .stderr()
+        .contains("cannot be used with")
+        .unwrap();
+}
+
+#[test]
+fn fails_for_start_end_and_today() {
+    assert_cli::Assert::command(&[
+        "target/debug/days_between",
+        "2017-01-01",
+        "2017-01-02",
+        "--today",
     ]).fails()
         .and()
         .stderr()

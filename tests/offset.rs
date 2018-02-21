@@ -1,4 +1,6 @@
 extern crate assert_cli;
+extern crate chrono;
+use chrono::{Duration, Utc};
 
 #[test]
 fn non_numeric_offset() {
@@ -67,5 +69,37 @@ fn custom_format() {
         .and()
         .stdout()
         .is("02/12/18")
+        .unwrap();
+}
+
+#[test]
+fn positive_offset_today() {
+    assert_cli::Assert::command(&["target/debug/days_between", "--today", "-o=3"])
+        .succeeds()
+        .and()
+        .stdout()
+        .is(format!(
+            "{}",
+            Utc::today()
+                .checked_add_signed(Duration::days(3))
+                .unwrap()
+                .format("%Y-%m-%d")
+        ))
+        .unwrap();
+}
+
+#[test]
+fn negative_offset_today() {
+    assert_cli::Assert::command(&["target/debug/days_between", "-t", "-o=-3"])
+        .succeeds()
+        .and()
+        .stdout()
+        .is(format!(
+            "{}",
+            Utc::today()
+                .checked_sub_signed(Duration::days(3))
+                .unwrap()
+                .format("%Y-%m-%d")
+        ))
         .unwrap();
 }

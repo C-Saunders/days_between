@@ -46,10 +46,16 @@ $ <path>/days_between days_between 2018-01-01 2017-12-29 -l
 # 2017-12-30
 # 2017-12-29
 ```
+```bash
+# The today (-t, --today) option can be used in place of the start date
+$ <path>/days_between --today -o=3 # 2018-02-24 when run on 2018-02-21
+
+# today is always the start date, even if listed after a date
+$ <path>/days_between 2018-01-01 --today # -51 when run on 2018-02-21
+```
 
 ## API
-* `./days_between <start_date> [<end_date> OR --offset=integer] [options]`
-* `./days_between -o=integer <start_date>`
+* `./days_between [<start_date> or --today] [<end_date> OR --offset=integer] [options]`
 
 Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations and can be overridden and customized using the format option.
 
@@ -57,7 +63,8 @@ Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start dat
 * -h, --help Print help info
 * -l, --list Prints all dates in the calculated range (e.g. for `xargs` input)
 * -o, --offset <offset> Calculate the date this many days offset the start date. Positive or negative integer.
-* -f, --format Specify the output date format (defaults to matching start date format). See [chrono::format::strftime](https://docs.rs/chrono/0.4.0/chrono/format/strftime/index.html) for options.
+* -t, --today Use today's date as the start date for the calculation.
+* -f, --format <format> Specify the output date format (defaults to matching start date format). See [chrono::format::strftime](https://docs.rs/chrono/0.4.0/chrono/format/strftime/index.html) for options.
 
 ## Setup
 
