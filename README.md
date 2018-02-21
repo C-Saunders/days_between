@@ -57,7 +57,9 @@ $ <path>/days_between 2018-01-01 --today # -51 when run on 2018-02-21
 ## API
 * `./days_between [<start_date> or --today] [<end_date> OR --offset=integer] [options]`
 
-Date format: `YYYYMMDD` or `YYYY-MM-DD`. The output format matches the start date format for offset calculations and can be overridden and customized using the format option.
+Date format: `YYYYMMDD` or `YYYY-MM-DD`.
+
+The output format matches the start date format for offset calculations and can be overridden and customized using the format option. If the `today` option is used, the output default format is `YYYY-MM-DD`.
 
 ## Options
 * -h, --help Print help info
