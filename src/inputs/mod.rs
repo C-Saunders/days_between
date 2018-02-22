@@ -5,12 +5,12 @@ extern crate regex;
 mod date_string_parser;
 
 use clap::ArgMatches;
-use chrono::{Date, TimeZone, Utc};
+use chrono::{Date, TimeZone, Local};
 use DateFormat;
 
 pub struct Inputs {
-    pub start: Option<Date<Utc>>,
-    pub end: Option<Date<Utc>>,
+    pub start: Option<Date<Local>>,
+    pub end: Option<Date<Local>>,
     pub offset: Option<i64>,
     pub format_type: DateFormat,
     pub list_output: bool,
@@ -21,19 +21,19 @@ impl Inputs {
     pub fn new(args: ArgMatches) -> Result<Inputs, &'static str> {
         let mut input_format_type = DateFormat::Dashes;
 
-        let mut start: Option<Date<Utc>> = match args.value_of("start") {
+        let mut start: Option<Date<Local>> = match args.value_of("start") {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
                 input_format_type = parsed_value.format_type;
-                Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
+                Some(Local.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
             }
             None => None,
         };
 
-        let mut end: Option<Date<Utc>> = match args.value_of("end") {
+        let mut end: Option<Date<Local>> = match args.value_of("end") {
             Some(value) => {
                 let parsed_value = date_string_parser::ParsedDateString::new(value)?;
-                Some(Utc.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
+                Some(Local.ymd(parsed_value.year, parsed_value.month, parsed_value.day))
             }
             None => None,
         };
@@ -52,7 +52,7 @@ impl Inputs {
         };
 
         let today = if args.is_present("today") {
-            Some(Utc::today())
+            Some(Local::today())
         } else {
             None
         };

@@ -1,15 +1,15 @@
 use inputs::Inputs;
-use chrono::{Date, Duration, Utc};
+use chrono::{Date, Duration, Local};
 use DateFormat;
 
 struct Range {
-    start: Date<Utc>,
-    end: Date<Utc>,
-    current: Date<Utc>,
+    start: Date<Local>,
+    end: Date<Local>,
+    current: Date<Local>,
 }
 
 impl Range {
-    fn new(start: Date<Utc>, end: Date<Utc>) -> Range {
+    fn new(start: Date<Local>, end: Date<Local>) -> Range {
         Range {
             start,
             end,
@@ -23,7 +23,7 @@ impl Range {
 }
 
 impl Iterator for Range {
-    type Item = Date<Utc>;
+    type Item = Date<Local>;
     fn next(&mut self) -> Option<Self::Item> {
         let start = self.start;
         let end = self.end;
