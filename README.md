@@ -59,7 +59,7 @@ $ <path>/days_between 2018-01-01 --today # -51 when run on 2018-02-21
 
 Date format: `YYYYMMDD` or `YYYY-MM-DD`.
 
-The output format matches the start date format for offset calculations and can be overridden and customized using the format option. If the `today` option is used, the output default format is `YYYY-MM-DD`.
+The output format matches the start date format for offset calculations and can be overridden and customized using the format option. If the `today` option is used, the default output format is `YYYY-MM-DD`.
 
 ## Options
 * -h, --help Print help info
@@ -70,6 +70,10 @@ The output format matches the start date format for offset calculations and can 
 
 ## Setup
 
+### Download a release binary
+See the [GitHub releases](https://github.com/C-Saunders/days_between/releases).
+
+### Build from source with [cargo](https://github.com/rust-lang/cargo)
 1. `git clone`
 1. `cd days_between`
 1. `cargo build --release`
